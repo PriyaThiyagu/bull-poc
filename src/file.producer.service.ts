@@ -6,7 +6,7 @@ import { Queue } from "bull";
 export class FileProducerService{
     constructor(@InjectQueue('file-operation')private queue:Queue){}
     async deleteFile(fileName:string){
-        let filePath=`/home/pradeep/Pictures/${fileName}.jpg`
+        let filePath=`/home/pradeep/Pictures/${fileName}.jpeg`
         await this.queue.add('delete-file',{
             path:filePath           
         },

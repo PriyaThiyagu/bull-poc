@@ -6,16 +6,34 @@ import { FileConsumer } from './file.consumer';
 import { FileProducerService } from './file.producer.service';
 import { MessageConsumer } from './message.consumer';
 import { MessageProducerService } from './message.producer.service';
-
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    BullModule.forRoot({
-      redis:{
-        host:'localhost',
-        port:6379
-      }
-    }),
+    // BullModule.forRoot({
+    //   redis:{
+    //     host:'localhost',
+    //     port:6379
+    //   }
+    // }),
+    // BullModule.forRootAsync({
+    //   useFactory:()=>({
+    //     redis:{
+    //       host:'localhost',
+    //       port:6379,
+    //     }
+    //   })
+    // }),
+    BullModule.forRootAsync({
+      imports:[ConfigModule],
+      useFactory:async(configService:ConfigService)=>({
+        redis:{
+          host:configService.get('QUEUE_HOST'),
+          port:configService.get('QUEUE_PORT'),
+        }
+      }),
+    inject:[ConfigService],
+  }),
     BullModule.registerQueue({
       name:'message-queue'
     },
