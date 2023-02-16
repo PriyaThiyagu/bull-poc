@@ -1,6 +1,5 @@
-import { OnGlobalQueueActive, OnQueueActive, Process, Processor } from "@nestjs/bull";
-import { Global } from "@nestjs/common";
-import Bull, { Job } from "bull";
+import { OnQueueActive, Process, Processor } from "@nestjs/bull";
+import { Job } from "bull";
 
 @Processor('message-queue')
 export class MessageConsumer {

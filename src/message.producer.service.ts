@@ -8,10 +8,21 @@ export class MessageProducerService{
 
     async sendMessage(msg:string){
         await this.queue.add('message-job',{
-            name:msg
+            name:msg,
+            string:msg
         },
         {
             delay:10000
-        });
+        }
+        );
+        await this.queue.add('message-job',{
+            name:msg
+        },),
+        await this.queue.add('message-job',{
+            name:msg,
+            string:msg,
+            test:msg
+        },
+        )
     }
 }
